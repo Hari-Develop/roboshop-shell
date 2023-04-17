@@ -42,5 +42,3 @@ yum install mongodb-org-shell -y
 
 echo -e "\e[32m.......loading the scheme......\e[0m"
 mongo --host mongodb-dev.unlockers.online </app/schema/catalogue.js
-
-
