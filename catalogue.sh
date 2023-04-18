@@ -13,4 +13,4 @@ systemctl enable catalogue
 systemctl restart catalogue
 cp /root/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
 yum install mongodb-org-shell -y
-mongo --host 172.31.31.235 </app/schema/catalogue.js
+mongo --host mongodb-dev.unlockers.online </app/schema/catalogue.js
