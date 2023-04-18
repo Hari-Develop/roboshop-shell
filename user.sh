@@ -11,6 +11,9 @@ echo -e "\e[32m.....making the directory.....\e[0m"
 rm -rf /app
 mkdir /app 
 
+echo -e "\e[32m.....Downloading the content.....\e[0m"
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip 
+
 echo -e "\e[32m.....changing the directory.....\e[0m"
 cd /app
 
