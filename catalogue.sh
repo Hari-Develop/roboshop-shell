@@ -1,5 +1,3 @@
-
-
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 yum install nodejs -y
 useradd roboshop
@@ -14,4 +12,4 @@ systemctl enable catalogue
 systemctl restart catalogue
 cp /root/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
 yum install mongodb-org-shell -y
-mongo --host mongodb-dev.unlockers.online </app/schema/catalogue.js
+mongo --host 172.31.31.235 </app/schema/catalogue.js
