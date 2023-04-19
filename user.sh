@@ -1,5 +1,6 @@
 script =$(realpath "$0")
 realpath $0
+exit
 script_path =$(dirname "$script")
 
 echo -e "\e[32m.....installing the repo for the node.....\e[0m"
