@@ -1,46 +1,47 @@
 script=$(realpath "$0")
 script_path=$(dirname "$script")
+source/comman.sh
 
-echo -e "\e[32m.....installing the repo for the node.....\e[0m"
+print_msg "installing the repo for the node"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-echo -e "\e[32m.....installing the nodejs.....\e[0m"
+print_msg "installing the nodejs"
 yum install nodejs -y
 
-echo -e "\e[32m.....add application user.....\e[0m"
+print_msg "add application user"
 useradd roboshop
 
-echo -e "\e[32m.....making the directory.....\e[0m"
+print_msg "making the directory"
 rm -rf /app
 mkdir /app 
 
-echo -e "\e[32m.....Downloading the content.....\e[0m"
+print_msg "Downloading the content"
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip 
 
-echo -e "\e[32m.....changing the directory.....\e[0m"
+print_msg "changing the directory"
 cd /app
 
-echo -e "\e[32m.....unzip the content in the app directory.....\e[0m"
+print_msg "unzip the content in the app directory"
 unzip /tmp/user.zip
 
-echo -e "\e[32m.....installing the npm install.....\e[0m"
+print_msg "installing the npm install"
 npm install
 
-echo -e "\e[32m.....adding the service file.....\e[0m"
+print_msg "adding the service file"
 cp $script_path/user.service /etc/systemd/system/user.service
 
-echo -e "\e[32m.....starting the service file.....\e[0m"
+print_msg "starting the service file"
 systemctl daemon-reload
 systemctl enable user 
 systemctl start user
 
-echo -e "\e[32m.....adding the mongo.repo.....\e[0m"
+print_msg "adding the mongo.repo"
 cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
 
-echo -e "\e[32m.....adding the mongo-shell-client.....\e[0m"
+print_msg "adding the mongo-shell-client"
 yum install mongodb-org-shell -y
 
-echo -e "\e[32m.....adding loading scheme.....\e[0m"
+print_msg "adding loading scheme"
 mongo --host mongodb-dev.unlockers.online </app/schema/user.js
 
 
