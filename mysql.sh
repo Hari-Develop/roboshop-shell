@@ -1,8 +1,11 @@
+script=$(realpath "$0")
+script_path=$(dirname "$script")
+
 echo -e "\e[32m....disable the my sql....\e[0m"
 dnf module disable mysql -y 
 
 echo -e "\e[32m....adding the mysql repo...\e[0m"
-cp /root/roboshop-shell/mysql.repo /etc/yum.repos.d/mysql.repo
+cp $script_path/mysql.repo /etc/yum.repos.d/mysql.repo
 
 echo -e "\e[32m....installing the community-server....\e[0m"
 yum install mysql-community-server -y

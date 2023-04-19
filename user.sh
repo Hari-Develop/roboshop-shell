@@ -43,6 +43,3 @@ yum install mongodb-org-shell -y
 
 print_msg "adding loading scheme"
 mongo --host mongodb-dev.unlockers.online </app/schema/user.js
-
-
-

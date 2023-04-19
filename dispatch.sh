@@ -1,3 +1,6 @@
+script=$(realpath "$0")
+script_path=$(dirname "$script")
+
 yum install golang -y
 useradd roboshop
 rm -rf /app
@@ -8,7 +11,7 @@ unzip /tmp/dispatch.zip
 go mod init dispatch
 go get 
 go build
-cp /root/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service
+cp $script_path/dispatch.service /etc/systemd/system/dispatch.service
 systemctl daemon-reload
 systemctl enable dispatch 
 systemctl start dispatch

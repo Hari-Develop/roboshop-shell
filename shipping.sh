@@ -1,3 +1,8 @@
+script=$(realpath "$0")
+script_path=$(dirname "$script")
+
+mysql_root_passwd=$1
+
 echo -e "\e[32m....installing the maven....\e[0m"
 yum install maven -y
 
@@ -22,7 +27,7 @@ mvn clean package
 mv target/shipping-1.0.jar shipping.jar
 
 echo -e "\e[32m....loading the service file....\e[0m"
-cp /root/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp $script_path/shipping.service /etc/systemd/system/shipping.service
 
 echo -e "\e[32m....start the shipping service file....\e[0m"
 systemctl daemon-reload
@@ -33,7 +38,7 @@ echo -e "\e[32m....installing the mysql....\e[0m"
 yum install mysql -y 
 
 echo -e "\e[32m....loading the scheme....\e[0m"
-mysql -h mysql-dev.unlockers.online -uroot -pRoboShop@1 < /app/schema/shipping.sql 
+mysql -h mysql-dev.unlockers.online -uroot -p${mysql_root_passwd} < /app/schema/shipping.sql 
 
 systemctl restart shipping
 
