@@ -1,6 +1,5 @@
-#!/bin/bash
-script =$(realpath "$0")
-script_path =$(dirname "$script")
+script=$(realpath "$0")
+script_path=$(dirname "$script")
 
 echo -e "\e[32m.....installing the repo for the node.....\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
@@ -36,7 +35,7 @@ systemctl enable user
 systemctl start user
 
 echo -e "\e[32m.....adding the mongo.repo.....\e[0m"
-cp /root/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
 
 echo -e "\e[32m.....adding the mongo-shell-client.....\e[0m"
 yum install mongodb-org-shell -y
