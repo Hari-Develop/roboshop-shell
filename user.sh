@@ -1,5 +1,5 @@
 script = $(realpath "$0")
-script_path = $(dirname $"script")
+script_path = $(dirname "$script")
 
 echo -e "\e[32m.....installing the repo for the node.....\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
