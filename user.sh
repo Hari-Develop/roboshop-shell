@@ -1,6 +1,9 @@
 script=$(realpath "$0")
 script_path=$(dirname "$script")
-source/comman.sh
+
+print_msg (){
+    echo -e "\e[32m.... $1 ....\e[0m"
+}
 
 print_msg "installing the repo for the node"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
