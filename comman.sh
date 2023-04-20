@@ -90,6 +90,7 @@ func_java () {
         echo -e "\e[32m...SUCCESS...\e[0m"
     else
         echo -e "\e[31m...failuer...\e[0m"
+        exit
     fi
 
     funct_prereq
@@ -97,6 +98,14 @@ func_java () {
     print_msg "cleaning the maven"
     mvn clean package 
     mv target/${component}-1.0.jar ${component}.jar 
+
+    if [$? -eq 0]
+    then 
+        echo -e "\e[32m...SUCCESS...\e[0m"
+    else
+        echo -e "\e[31m...failuer...\e[0m"
+        exit
+    fi
 
     schema_fun
 
