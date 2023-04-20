@@ -6,49 +6,92 @@ print_msg (){
     echo -e "\e[32m.... $1 ....\e[0m"
 }
 
+
+
 schema_fun () {
-    print_msg "adding the mongo.repo"
-    cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
+    if ["$schema_fun" == "mongo"]
+    then
+        print_msg "adding the mongo.repo"
+        cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
 
-    print_msg "adding the mongo-shell-client"
-    yum install mongodb-org-shell -y
+        print_msg "adding the mongo-shell-client"
+        yum install mongodb-org-shell -y
 
-    print_msg "adding loading scheme"
-    mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js
+        print_msg "adding loading scheme"
+        mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js
+    fi
+
+    if ["$schema_fun" == "mysql"]
+    then
+        print_msg "installing the mysql"
+        yum install mysql -y 
+
+        print_msg "loading the scheme"
+        mysql -h mysql-dev.unlockers.online -uroot -p${mysql_root_passwd} < /app/schema/shipping.sql 
+    fi
 }
 
-function_application () {
-    echo -e "\e[32m.....installing the repo for the node.....\e[0m"
-    curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-    echo -e "\e[32m.....installing the nodejs.....\e[0m"
-    yum install nodejs -y
 
-    echo -e "\e[32m.....add application user.....\e[0m"
-    useradd ${roboshop}
+funct_prereq () {
+    print_msg "add application user"  
+    useradd ${app_user}
 
-    echo -e "\e[32m.....making the directory.....\e[0m"
+    print_msg "making the directory"
     rm -rf /app
     mkdir /app 
 
-    echo -e "\e[32m.....Downloading the content.....\e[0m"
+    print_msg "Downloading the content"
     curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip 
 
-    echo -e "\e[32m.....changing the directory.....\e[0m"
+    print_msg "changing the directory"
     cd /app
 
-    echo -e "\e[32m.....unzip the content in the app directory.....\e[0m"
-    unzip /tmp/${component}.zip
+    print_msg "unzip the content in the app directory"
+    unzip /tmp/${component}.zip 
+}
 
-    echo -e "\e[32m.....installing the npm install.....\e[0m"
-    npm install
-
-    echo -e "\e[32m.....adding the service file.....\e[0m"
+func_systemd_setup () {
+    print_msg "adding the service file"
     cp $script_path/${component}.service /etc/systemd/system/${component}.service
 
-    echo -e "\e[32m.....starting the service file.....\e[0m"
+    print_msg "starting the system"
     systemctl daemon-reload
     systemctl enable ${component} 
     systemctl start ${component}
+    systemctl restart shipping
+}
 
+function_nodejs () {
+    print_msg "installing the repo for the node"
+    curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+
+    print_msg "installing the nodejs"
+    yum install nodejs -y
+
+    funct_prereq
+
+    print_msg "installing the npm install"
+    npm install
+
+    schema_fun
+
+    func_systemd_setup
+}
+
+
+
+func_java () {
+    print_msg "installing the maven"
+    yum install maven -y
+
+    funct_prereq
+
+    print_msg "cleaning the maven"
+    mvn clean package 
+    mv target/${component}-1.0.jar ${component}.jar 
+    
+    schema_fun
+
+    func_systemd_setup
 }
