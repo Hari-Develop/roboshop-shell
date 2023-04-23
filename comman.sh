@@ -125,19 +125,19 @@ func_java () {
 }
 
 fun_python () {
-    
+
     print_msg "installing the python package"
-    yum install python36 gcc python3-devel -y
+    yum install python36 gcc python3-devel -y &>>$log_file
     stat_check_fuction $?
 
     funct_prereq
 
     print_msg "installing the pip3.6 "
-    pip3.6 install -r requirements.txt
+    pip3.6 install -r requirements.txt &>>$log_file
     stat_check_fuction $?
 
     print_msg "changing the rabbit_password"
-    sed -i -e "s|rabbit_user_passwd|$rabbit_user_passwd|"
+    sed -i -e "s|rabbit_user_passwd|$rabbit_user_passwd|" &>>$log_file
     stat_check_fuction $?
 
     func_systemd_setup
