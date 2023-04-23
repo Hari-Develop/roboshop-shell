@@ -1,16 +1,28 @@
-echo -e "\e[32m.....installing the repo for the redis.....\e[0m"
-yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+script=$(realpath "$0")
+script_path=$(dirname "$script")
+source ${script_path}/comman.sh
 
-echo -e "\e[32m.....enabling the redis server.....\e[0m"
-dnf module enable redis:remi-6.2 -y
 
-echo -e "\e[32m.....installing the redis.....\e[0m"
-yum install redis -y 
+print_msg "installing the repo for the redis"
+yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>$log_file
+stat_check_fuction $?
 
-echo -e "\e[32m.....chnaging the port.....\e[0m"
-sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/redis/redis.conf
+print_msg "enabling the redis server"
+dnf module enable redis:remi-6.2 -y &>>$log_file
+stat_check_fuction $?
 
-echo -e "\e[32m.....starting the redis server.....\e[0m"
-systemctl enable redis 
-systemctl start redis 
+print_msg "installing the redis"
+yum install redis -y &>>$log_file
+stat_check_fuction $?
+
+
+print_msg "chnaging the port"
+sed -i -e 's|127.0.0.1|0.0.0.0|' /etc/redis/redis.conf &>>$log_file
+stat_check_fuction $?
+
+
+print_msg "starting the redis server"
+systemctl enable redis &>>$log_file
+systemctl start redis &>>$log_file
+stat_check_fuction $? 
 
