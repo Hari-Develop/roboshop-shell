@@ -57,8 +57,7 @@ funct_prereq () {
     then
         useradd ${app_user} &>>/tmp/roboshop.log
     fi
-    
-    func_stat_check $?
+    stat_check_fuction $?
 
     print_msg "making the directory"
     rm -rf /app &>>$log_file
