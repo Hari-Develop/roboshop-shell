@@ -21,11 +21,8 @@ stat_check_fuction () {
 }
 
 
-
-
-
 schema_fun () {
-    if ["$schema_fun" == "mongo"]; then
+    if [ "$schema_fun" == "mongo" ]; then
         print_msg "adding the mongo.repo"
         cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo &>>$log_file
 
@@ -37,7 +34,7 @@ schema_fun () {
     fi
 
 
-    if ["$schema_fun" == "mysql"]; then
+    if [ "$schema_fun" == "mysql" ]; then
         print_msg "installing the mysql"
         yum install mysql -y &>>$log_file
 
@@ -96,7 +93,6 @@ function_nodejs () {
     npm install &>>$log_file
 
     schema_fun
-
     func_systemd_setup
 }
 
