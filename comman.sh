@@ -25,7 +25,8 @@ stat_check_fuction () {
 
 
 schema_fun () {
-    if ["$schema_fun" == "mongo"]; then
+    if ["$schema_fun" == "mongo"]; 
+    then
         print_msg "adding the mongo.repo"
         cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
 
@@ -78,7 +79,7 @@ func_systemd_setup () {
     systemctl daemon-reload &>>$log_file
     systemctl enable ${component} &>>$log_file 
     systemctl start ${component} &>>$log_file
-    systemctl restart shipping &>>$log_file
+    systemctl restart ${component} &>>$log_file
 
 }
 
