@@ -35,7 +35,7 @@ schema_fun () {
         print_msg "adding loading scheme"
         mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js
     fi
-    stat_check_fuction $?
+
 
     if ["$schema_fun" == "mysql"];
     then
@@ -45,7 +45,7 @@ schema_fun () {
         print_msg "loading the scheme"
         mysql -h mysql-dev.unlockers.online -uroot -p${mysql_root_passwd} < /app/schema/shipping.sql 
     fi
-    stat_check_fuction $?
+
 }
 
 
