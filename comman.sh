@@ -51,8 +51,7 @@ schema_fun () {
 
 funct_prereq () {
 
-    print_msg "add application user" 
-    userdel ${app_user} 
+    print_msg "add application user"  
     useradd ${app_user} &>>$log_file
     stat_check_fuction $?
 
