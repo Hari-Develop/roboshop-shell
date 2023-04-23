@@ -11,7 +11,7 @@ print_msg (){
 
 
 stat_check_fuction () {
-    if [$1 -eq 0]; then
+    if [ $1 -eq 0 ]; then
         echo -e "\e[32m...SUCCESS...\e[0m"
     else
         echo -e "\e[31m...failuer...\e[0m"
@@ -33,7 +33,6 @@ schema_fun () {
         mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js &>>$log_file
     fi
 
-
     if [ "$schema_fun" == "mysql" ]; then
         print_msg "installing the mysql"
         yum install mysql -y &>>$log_file
@@ -45,8 +44,8 @@ schema_fun () {
 }
 
 
-
 funct_prereq () {
+
     print_msg "add application user"  
     useradd ${app_user} &>>$log_file
 
@@ -69,7 +68,6 @@ func_systemd_setup () {
     print_msg "adding the service file"
     cp ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>$log_file
 
-
     print_msg "starting the system"
     systemctl daemon-reload &>>$log_file
     systemctl enable ${component} &>>$log_file 
@@ -82,10 +80,8 @@ function_nodejs () {
     print_msg "installing the repo for the node"
     curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
 
-
     print_msg "installing the nodejs"
     yum install nodejs -y &>>$log_file
-
 
     funct_prereq
 
@@ -95,8 +91,6 @@ function_nodejs () {
     schema_fun
     func_systemd_setup
 }
-
-
 
 func_java () {
     print_msg "installing the maven"
