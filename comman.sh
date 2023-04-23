@@ -25,26 +25,24 @@ stat_check_fuction () {
 
 
 schema_fun () {
-    if ["$schema_fun" == "mongo"]; 
-    then
+    if ["$schema_fun" == "mongo"]; then
         print_msg "adding the mongo.repo"
-        cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
+        cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo &>>$log_file
 
         print_msg "adding the mongo-shell-client"
-        yum install mongodb-org-shell -y
+        yum install mongodb-org-shell -y &>>$log_file
 
         print_msg "adding loading scheme"
-        mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js
+        mongo --host mongodb-dev.unlockers.online </app/schema/${component}.js &>>$log_file
     fi
 
 
-    if ["$schema_fun" == "mysql"];
-    then
+    if ["$schema_fun" == "mysql"]; then
         print_msg "installing the mysql"
-        yum install mysql -y 
+        yum install mysql -y &>>$log_file
 
         print_msg "loading the scheme"
-        mysql -h mysql-dev.unlockers.online -uroot -p${mysql_root_passwd} < /app/schema/shipping.sql 
+        mysql -h mysql-dev.unlockers.online -uroot -p${mysql_root_passwd} < /app/schema/shipping.sql &>>$log_file
     fi
 
 }
@@ -72,7 +70,7 @@ funct_prereq () {
 
 func_systemd_setup () {
     print_msg "adding the service file"
-    cp $script_path/${component}.service /etc/systemd/system/${component}.service &>>$log_file
+    cp ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>$log_file
 
 
     print_msg "starting the system"
