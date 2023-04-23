@@ -13,7 +13,7 @@ print_msg (){
 
 
 stat_check_fuction () {
-    if [$1 -eq 0]
+    if [$1 -eq 0];
     then 
         echo -e "\e[32m...SUCCESS...\e[0m"
     else
@@ -28,7 +28,7 @@ stat_check_fuction () {
 
 
 schema_fun () {
-    if ["$schema_fun" == "mongo"]
+    if ["$schema_fun" == "mongo"];
     then
         print_msg "adding the mongo.repo"
         cp $script_path/mongo.repo /etc/yum.repos.d/mongo.repo
@@ -41,7 +41,7 @@ schema_fun () {
     fi
     stat_check_fuction $?
 
-    if ["$schema_fun" == "mysql"]
+    if ["$schema_fun" == "mysql"];
     then
         print_msg "installing the mysql"
         yum install mysql -y 
