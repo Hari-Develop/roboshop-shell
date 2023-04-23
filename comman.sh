@@ -51,7 +51,8 @@ schema_fun () {
 
 funct_prereq () {
 
-    print_msg "add application user"  
+    print_msg "add application user" 
+    userdel ${app_user} 
     useradd ${app_user} &>>$log_file
     stat_check_fuction $?
 
@@ -129,7 +130,7 @@ fun_python () {
     print_msg "installing the python package"
     yum install python36 gcc python3-devel -y &>>$log_file
     stat_check_fuction $?
-    
+
     userdel ${app_user} 
     funct_prereq
 
