@@ -5,8 +5,8 @@ log_file=/tmp/roboshop.log
 
 
 print_msg (){
-    echo -e "\e[32m.... $1 ....\e[0m"
-    echo -e "\e[32m.... $1 ....\e[0m" &>>$log_file
+    echo -e "\e[33m.... $1 ....\e[0m"
+    echo -e "\e[33m.... $1 ....\e[0m" &>>$log_file
 }
 
 
