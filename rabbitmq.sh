@@ -11,20 +11,26 @@ fi
 
 print_msg "adding the rpm package"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>$log_file
+stat_check_fuction $?
 
 print_msg "adding the installing the erlang"
 yum install erlang -y &>>$log_file
+stat_check_fuction $?
 
 print_msg "installing the package of rabbit mq server"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>>$log_file
+stat_check_fuction $?
 
 print_msg "installing the rabbit mq server"
 yum install rabbitmq-server -y &>>$log_file
+stat_check_fuction $?
 
 print_msg "enabling the rabbit mq server usong the system ctl"
 systemctl enable rabbitmq-server &>>$log_file
 systemctl start rabbitmq-server &>>$log_file
+stat_check_fuction $?
 
 print_msg "adding user and setupping the permission"
 rabbitmqctl add_user ${app_user} ${rabbit_user_passwd} &>>$log_file
 rabbitmqctl set_permissions -p / ${app_user} ".*" ".*" ".*" &>>$log_file
+stat_check_fuction $?
