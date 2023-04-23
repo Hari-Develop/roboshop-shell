@@ -2,8 +2,6 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 source ${script_path}/comman.sh
 
-stat_check_fuction $?
-
 print_msg "installing the nginx server"
 yum install nginx -y 
 stat_check_fuction $?
