@@ -96,7 +96,8 @@ function_nodejs () {
     print_msg "installing the nodejs"
     yum install nodejs -y &>>$log_file
     stat_check_fuction $?
-
+    
+    userdel ${app_user}
     funct_prereq
 
     print_msg "installing the npm install"
@@ -112,6 +113,7 @@ func_java () {
     yum install maven -y >/tmp/roboshop.log &>>$log_file
     stat_check_fuction $?
 
+    userdel ${app_user} 
     funct_prereq
 
     print_msg "cleaning the maven" &>>$log_file
