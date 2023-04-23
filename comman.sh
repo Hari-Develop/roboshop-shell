@@ -129,7 +129,8 @@ fun_python () {
     print_msg "installing the python package"
     yum install python36 gcc python3-devel -y &>>$log_file
     stat_check_fuction $?
-    rm -rf ${app_user} 
+    
+    userdel ${app_user} 
     funct_prereq
 
     print_msg "installing the pip3.6 "
