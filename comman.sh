@@ -137,7 +137,7 @@ fun_python () {
     stat_check_fuction $?
 
     print_msg "changing the rabbit_password"
-    sed -i -e "s|rabbit_user_passwd|$rabbit_user_passwd|" &>>$log_file
+    sed -i -e "s|rabbit_user_passwd|$rabbit_user_passwd|" ${script_path}/payment.service &>>$log_file
     stat_check_fuction $?
 
     func_systemd_setup
