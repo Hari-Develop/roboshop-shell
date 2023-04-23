@@ -125,6 +125,7 @@ func_java () {
 }
 
 fun_python () {
+    
     print_msg "installing the python package"
     yum install python36 gcc python3-devel -y
     stat_check_fuction $?
