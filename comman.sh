@@ -1,7 +1,6 @@
 app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
-
 log_file=/tmp/roboshop.log
 
 
@@ -13,8 +12,7 @@ print_msg (){
 
 
 stat_check_fuction () {
-    if [$1 -eq 0];
-    then 
+    if [$1 -eq 0]; then
         echo -e "\e[32m...SUCCESS...\e[0m"
     else
         echo -e "\e[31m...failuer...\e[0m"
