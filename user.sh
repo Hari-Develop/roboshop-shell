@@ -3,5 +3,4 @@ script_path=$(dirname "$script")
 source ${script_path}/comman.sh
 
 component=user
-function_application
-schema_fun
+function_nodejs
