@@ -53,53 +53,48 @@ schema_fun () {
 funct_prereq () {
     print_msg "add application user"  
     useradd ${app_user} &>>$log_file
-    stat_check_fuction $?
 
     print_msg "making the directory"
     rm -rf /app &>>$log_file
     mkdir /app &>>$log_file 
-    stat_check_fuction $?
 
     print_msg "Downloading the content"
     curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip&>>$log_file
-    stat_check_fuction $?
 
     print_msg "changing the directory"
     cd /app &>>$log_file
-    stat_check_fuction $?
 
     print_msg "unzip the content in the app directory"
     unzip /tmp/${component}.zip &>>$log_file 
-    stat_check_fuction $?
+
 }
 
 func_systemd_setup () {
     print_msg "adding the service file"
     cp $script_path/${component}.service /etc/systemd/system/${component}.service &>>$log_file
-    stat_check_fuction $?
+
 
     print_msg "starting the system"
     systemctl daemon-reload &>>$log_file
     systemctl enable ${component} &>>$log_file 
     systemctl start ${component} &>>$log_file
     systemctl restart shipping &>>$log_file
-    stat_check_fuction $?
+
 }
 
 function_nodejs () {
     print_msg "installing the repo for the node"
     curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
-    stat_check_fuction $?
+
 
     print_msg "installing the nodejs"
     yum install nodejs -y &>>$log_file
-    stat_check_fuction $?
+
 
     funct_prereq
 
     print_msg "installing the npm install"
     npm install &>>$log_file
-    stat_check_fuction $?
 
     schema_fun
 
@@ -112,15 +107,11 @@ func_java () {
     print_msg "installing the maven"
     yum install maven -y >/tmp/roboshop.log &>>$log_file
 
-    stat_check_fuction $?
-
     funct_prereq
 
     print_msg "cleaning the maven" &>>$log_file
     mvn clean package &>>$log_file
     mv target/${component}-1.0.jar ${component}.jar &>>$log_file
-
-    stat_check_fuction $?
 
     schema_fun
 
