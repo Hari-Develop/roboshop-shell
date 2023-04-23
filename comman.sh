@@ -53,9 +53,11 @@ funct_prereq () {
 
     print_msg "add application user"  
     id ${app_user} &>>/tmp/roboshop.log
-    if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]
+    then
         useradd ${app_user} &>>/tmp/roboshop.log
     fi
+    
     func_stat_check $?
 
     print_msg "making the directory"
