@@ -13,7 +13,7 @@ dnf module disable mysql -y &>>$log_file
 stat_check_fuction $?
 
 print_msg "adding the mysql repo"
-cp $script_path/mysql.repo /etc/yum.repos.d/mysql.repo &>>$log_file
+cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo &>>$log_file
 stat_check_fuction $?
 
 
@@ -33,6 +33,3 @@ mysql_secure_installation --set-root-pass ${mysql_root_passwd} &>>$log_file
 stat_check_fuction $?
 
 
-print_msg "checking the passwd"
-mysql -uroot -p${mysql_root_passwd} &>>$log_file
-stat_check_fuction $?
